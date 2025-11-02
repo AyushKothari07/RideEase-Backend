@@ -1,27 +1,13 @@
 package com.rideease.user_service.service;
 
-import com.rideease.user_service.entity.User;
-import com.rideease.user_service.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
+import com.rideease.user_service.dto.UserRequestDTO;
+import com.rideease.user_service.dto.UserResponseDTO;
 
-import java.util.Optional;
+import java.util.List;
 
-@Service
-public class UserService {
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    public User registerUser( User user){
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
-    }
-
-    public Optional<User> findByEmail(String email){
-        return userRepository.findByEmail(email);
-    }
+public interface UserService {
+    UserResponseDTO registerUser(UserRequestDTO userRequestDTO);
+    UserResponseDTO getUserById(Long id);
+    List<UserResponseDTO> getAllUsers();
+    void deleteUserById(Long id);
 }
